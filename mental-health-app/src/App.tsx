@@ -11,6 +11,7 @@ import CreateRoom from './components/CreateRoom';
 import Home from './components/Home';
 import AnimatedCursor from './components/AnimatedCursor';
 import PageTransition from './components/PageTransition';
+import { AuthProvider } from './context/AuthContext';
 import './css/main.css';
 import './css/main-dashboard.css';
 import './css/profile-page.css';

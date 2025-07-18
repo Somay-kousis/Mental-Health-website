@@ -10,6 +10,8 @@ const Dashboard: React.FC = () => {
   const [selectedTime, setSelectedTime] = useState<'morning' | 'night'>('morning');
   const [dailyLog, setDailyLog] = useState('');
   const [logEntries, setLogEntries] = useState<Array<{date: string, content: string}>>([]);
+  const [xp, setXP] = useState<number | null>(null);
+
 
   useEffect(() => {
     // Initialize mood chart
@@ -20,6 +22,29 @@ const Dashboard: React.FC = () => {
         if (chartInstance.current) {
           chartInstance.current.destroy();
         }
+          const fetchXP = async () => {
+    try {
+      const token = localStorage.getItem('token'); // Adjust if you're using context
+      const response = await fetch('http://localhost:5000/api/xp', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) throw new Error('Failed to fetch XP');
+
+      const data = await response.json();
+      setXP(data.xp);
+    } catch (err) {
+      console.error('Error fetching XP:', err);
+    }
+  };
+
+  fetchXP();
+  
+  // ...existing mood chart setup below
 
         // Sample mood data for the last 7 days
         const moodData = [7, 6, 8, 5, 9, 7, 8];
@@ -204,7 +229,9 @@ const Dashboard: React.FC = () => {
               <div className="stat-card premium-card">
                 <div className="stat-icon">⭐</div>
                 <div className="stat-info">
-                  <span className="stat-value premium-number">1,250</span>
+                  <span className="stat-value premium-number">
+  {xp !== null ? xp.toLocaleString() : '...'}
+</span>
                   <span className="stat-label premium-text">XP Points</span>
                 </div>
               </div>
