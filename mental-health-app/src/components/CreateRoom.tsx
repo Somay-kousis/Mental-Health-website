@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef,FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 const CreateRoom: React.FC = () => {
@@ -46,47 +46,31 @@ const CreateRoom: React.FC = () => {
   };
 
   // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      // Shake animation for error
-      if (formRef.current) {
-        formRef.current.style.animation = 'shake 0.5s ease-in-out';
-        setTimeout(() => {
-          if (formRef.current) {
-            formRef.current.style.animation = '';
-          }
-        }, 500);
-      }
-      return;
-    }
-
+    if (!validateForm()) return;
     setIsLoading(true);
-
     try {
-      // TODO: Connect to Node.js backend API for creating rooms
-      // Example:
-      // const response = await fetch('/api/chatrooms', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json', Authorization: 'Bearer TOKEN' },
-      //   body: JSON.stringify({
-      //     ...formData,
-      //     createdAt: new Date().toISOString()
-      //   })
-      // });
-      // const data = await response.json();
-
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      const res = await fetch('http://localhost:5000/api/rooms/create', {
+        method: 'POST',
+        headers:{ 'Content-Type':'application/json' },
+        body: JSON.stringify({ ...formData, createdAt: new Date() })
+      });
+      const { room } = await res.json();
+      navigate(`/chatroom/${room._id}`);
+      console.log('Room created and received from backend:', room);
+      if (!res.ok) throw new Error('Create failed');
       setIsLoading(false);
       setShowSuccessModal(true);
-    } catch (error) {
+      // after modal, route to the new room:
+      setTimeout(() => navigate(`/chatroom/${room._id}`), 1000);
+    } catch (err:unknown) {
       setIsLoading(false);
-      showSubmissionError(error instanceof Error ? error.message : 'An error occurred');
+       const msg = err instanceof Error ? err.message : 'An error occurred';
+      showSubmissionError(msg);
     }
   };
+
 
   // Handle input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

@@ -69,4 +69,21 @@ router.put('/update-profile', authenticateToken, async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+// Add this entire block to your user.js file
+
+router.get('/users/:id', async (req, res) => {
+  try {
+    // Find the user by the ID from the URL
+    const user = await User.findById(req.params.id).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    // If found, send back the user's data
+    res.json(user);
+  } catch (error) {
+    console.error('Error fetching user by ID:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 module.exports = router;
