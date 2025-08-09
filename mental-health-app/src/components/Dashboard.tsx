@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Chart from 'chart.js/auto';
 import AnimatedHeaderVisual from './AnimatedHeaderVisual';
+import StepTracker from '../components/StepTracker';
+
+
 
 const Dashboard: React.FC = () => {
   const chartRef = useRef<HTMLCanvasElement>(null);
@@ -461,6 +464,7 @@ const handleSaveLog = async () => {
               </div>
             </Link>
           </div>
+          <StepTracker />
         </section>
       </main>
     </>

@@ -1,4 +1,3 @@
-// models/MoodEntry.js
 const mongoose = require('mongoose');
 
 const moodEntrySchema = new mongoose.Schema({

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authenticateToken = require('../middleware/auth');
+const User = require('../models/User');
 function getLevelFromXP(xp) {
   let level = 1;
   let xpRequired = 10;
@@ -45,5 +46,27 @@ res.json({
   dailyStreak: req.user.dailyStreak
 });
 
+
+
+});
+router.put('/update-profile', authenticateToken, async (req, res) => {
+  try {
+    const { username, email, bio, pronouns, profilePicture } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      { username, email, bio, pronouns, profilePicture },
+      { new: true, runValidators: true }
+    ).select('-password'); // Don't return password
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json({ message: 'Profile updated', user: updatedUser });
+  } catch (err) {
+    console.error('Update error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 module.exports = router;

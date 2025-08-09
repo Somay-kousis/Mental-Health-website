@@ -2,9 +2,9 @@
 const express = require('express');
 const router = express.Router();
 const authenticateToken = require('../middleware/auth');
-const Log = require('../models/Log'); // You’ll define this next
+const Log = require('../models/Log');
+const { updateXP } = require('../utils/xpUtils');
 
-// Save log
 router.post('/', authenticateToken, async (req, res) => {
   const { content } = req.body;
 
@@ -18,14 +18,18 @@ router.post('/', authenticateToken, async (req, res) => {
       content,
       date: new Date().toISOString().split('T')[0],
     });
+
     await newLog.save();
-    res.status(201).json({ message: 'Log saved successfully' });
+
+    await updateXP(req.user.id, 15);
+
+    res.status(201).json({ message: 'Log saved and XP awarded!' });
   } catch (err) {
     console.error('Error saving log:', err);
     res.status(500).json({ error: 'Server error' });
   }
 });
-// Get logs for user
+
 router.get('/', authenticateToken, async (req, res) => {
   try {
     const logs = await Log.find({ user: req.user.id }).sort({ date: -1 });

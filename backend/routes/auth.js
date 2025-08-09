@@ -5,10 +5,9 @@ const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-this-in-production';
 
-// Helper
 const generateToken = (userId) => jwt.sign({ userId }, JWT_SECRET, { expiresIn: '7d' });
+const { updateXP } = require('../utils/xpUtils');
 
-// SIGNUP
 router.post('/signup', async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -50,7 +49,6 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// SIGNIN
 router.post('/signin', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -65,8 +63,9 @@ router.post('/signin', async (req, res) => {
     if (!isPasswordValid)
       return res.status(401).json({ error: 'Invalid email or password' });
 
-    // ✅ DAILY LOGIN TRACKING LOGIC
-    const today = new Date().toISOString().split('T')[0]; // e.g., "2025-07-19"
+    await updateXP(user._id, 5); // 5 XP for login
+
+    const today = new Date().toISOString().split('T')[0];
     const lastLogin = user.lastLoginDate ? user.lastLoginDate.toISOString().split('T')[0] : null;
 
     if (lastLogin !== today) {
@@ -77,7 +76,7 @@ router.post('/signin', async (req, res) => {
       if (isYesterday) {
         user.dailyStreak += 1;
       } else {
-        user.dailyStreak = 1; // reset streak
+        user.dailyStreak = 1; 
       }
 
       user.lastLoginDate = new Date();
@@ -94,8 +93,8 @@ router.post('/signin', async (req, res) => {
         username: user.username,
         email: user.email,
         createdAt: user.createdAt,
-        dailyStreak: user.dailyStreak,        
-        lastLoginDate: user.lastLoginDate,   
+        dailyStreak: user.dailyStreak,
+        lastLoginDate: user.lastLoginDate,
       },
     });
   } catch (error) {
@@ -105,7 +104,6 @@ router.post('/signin', async (req, res) => {
 });
 
 
-// LOGOUT (Client-side token removal)
 router.post('/logout', (req, res) => {
   res.json({ message: 'Logout successful. Please remove the token from client-side storage.' });
 });

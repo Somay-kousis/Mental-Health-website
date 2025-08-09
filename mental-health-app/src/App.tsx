@@ -11,6 +11,9 @@ import CreateRoom from './components/CreateRoom';
 import Home from './components/Home';
 import AnimatedCursor from './components/AnimatedCursor';
 import PageTransition from './components/PageTransition';
+import EditProfile from './components/EditProfile';
+import ChallengeDetails from './components/ChallengeDetails';
+
 import { AuthProvider } from './context/AuthContext';
 import './css/main.css';
 import './css/main-dashboard.css';
@@ -41,16 +44,30 @@ function App() {
               <Dashboard />
             </PageTransition>
           } />
+          
           <Route path="/profile" element={
-            <PageTransition>
-              <Profile />
-            </PageTransition>
-          } />
+  <PageTransition>
+    <Profile />
+  </PageTransition>
+} />
+
+<Route path="/edit-profile" element={
+  <PageTransition>
+    <EditProfile />
+  </PageTransition>
+} />
           <Route path="/challenges" element={
             <PageTransition>
               <Challenges />
             </PageTransition>
           } />
+          <Route path="/edit-profile" element={
+  <PageTransition>
+    <EditProfile />
+  </PageTransition>
+} />
+<Route path="/challenges/:id" element={<ChallengeDetails />} />
+
           <Route path="/achievements" element={
             <PageTransition>
               <Achievements />

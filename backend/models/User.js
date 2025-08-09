@@ -27,7 +27,10 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  
+  bio: { type: String, default: '' },
+pronouns: { type: String, default: '' },
+profilePicture: { type: String, default: '' },
+
     xp: {
     type: Number,
     default: 0

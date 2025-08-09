@@ -1,7 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Chart, registerables } from 'chart.js';
 import profilePic from '../images/somay.jpg';
+
+
+
+
 
 // Register Chart.js components
 Chart.register(...registerables);
@@ -9,6 +13,13 @@ Chart.register(...registerables);
 const Profile: React.FC = () => {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
+  const [user, setUser] = useState({
+  username: '',
+  pronouns: '',
+  bio: '',
+  profilePicture: ''
+});
+
 
   useEffect(() => {
     if (chartRef.current) {
@@ -18,6 +29,24 @@ const Profile: React.FC = () => {
         if (chartInstance.current) {
           chartInstance.current.destroy();
         }
+        const fetchProfile = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch('http://localhost:5000/api/user/profile', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!res.ok) throw new Error('Failed to fetch profile');
+      const data = await res.json();
+      setUser(data.user);  // assuming backend returns { user: { ... } }
+    } catch (err) {
+      console.error('Profile fetch error:', err);
+    }
+  };
+
+  fetchProfile();
 
         // Create new chart
         chartInstance.current = new Chart(ctx, {
@@ -154,12 +183,18 @@ const Profile: React.FC = () => {
         <div className="profile-header-progress-row">
           <section className="profile-header glass">
             <div className="profile-info">
-              <img src={profilePic} alt="Somay's Profile" className="profile-pic" width={140} height={140} />
+<img src={user.profilePicture || profilePic} alt="Profile" className="profile-pic" width={140} height={140} />
               <div className="profile-details">
-                <h1 className="profile-name premium-title">Somay</h1>
-                <span className="profile-pronouns">he/him</span>
-                <p className="profile-bio">Your smile is pretty, why dont you smile more often 🫧</p>
-                <button className="btn btn-primary edit-profile-btn">Edit Profile</button>
+<h1 className="profile-name premium-title">{user.username}</h1>
+<span className="profile-pronouns">{user.pronouns}</span>
+<p className="profile-bio">{user.bio}</p>
+
+
+<Link to="/edit-profile">
+  <button className="btn btn-primary edit-profile-btn">Edit Profile</button>
+</Link>
+
+
               </div>
             </div>
           </section>

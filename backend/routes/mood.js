@@ -3,10 +3,18 @@ const express = require('express');
 const router = express.Router();
 const authenticateToken = require('../middleware/auth');
 const MoodEntry = require('../models/MoodEntry');
+const { updateXP } = require('../utils/xpUtils');
 
-// Save mood
+router.post('/mood', authenticateToken, async (req, res) => {
+  const { mood, timeOfDay } = req.body;
+
+
+  await updateXP(req.user.id, 10);
+  res.json({ message: 'Mood saved and XP awarded!' });
+});
+
 router.post('/', authenticateToken, async (req, res) => {
-  console.log('✅ /api/mood route hit');
+  console.log(' /api/mood route hit');
   const { mood, timeOfDay } = req.body;
   const userId = req.user.id;
 
@@ -36,12 +44,11 @@ router.post('/', authenticateToken, async (req, res) => {
     await newEntry.save();
     res.status(201).json({ message: 'Mood saved.' });
   } catch (error) {
-    console.error('🔥 Mood save error:', error); // ✅ helpful logging
+    console.error(' Mood save error:', error); 
     res.status(500).json({ error: 'Server error.' });
   }
 });
 
-// routes/mood.js (continued)
 router.get('/journey', authenticateToken, async (req, res) => {
   const userId = req.user.id;
 

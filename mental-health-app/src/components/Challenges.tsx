@@ -1,20 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+
+
+
 
 const challenges = [
-  { title: "Mindful Mornings", emoji: "🎯", description: "Start your day with 10 minutes of mindfulness for 30 days.", progress: 60 },
-  { title: "Fitness Streak", emoji: "👟", description: "Exercise daily and log your progress for 21 days.", progress: 80 },
-  { title: "Healthy Eating", emoji: "🍎", description: "Share recipes and tips for a balanced diet for 14 days.", progress: 40 },
-  { title: "30-Day Mindfulness Journey", emoji: "🌱", description: "Day 7 of 30 - Building mindful habits", progress: 23 },
-  { title: "Home Workout Challenge", emoji: "✊🏻", description: "Day 12 of 21 - Keep moving at home", progress: 57 },
-  { title: "Daily Gratitude Practice", emoji: "🎐", description: "Day 7 of 14 - Cultivating gratitude and positivity", progress: 50 },
-  { title: "Hydration Challenge", emoji: "🐳", description: "Day 3 of 10 - Drink more water!", progress: 30 },
-  { title: "Digital Detox Challenge", emoji: "👀", description: "Day 2 of 7 - Less screen time, more me time", progress: 15 },
-  { title: "Morning Routine Challenge", emoji: "🌬️", description: "Day 5 of 21 - Start your day right", progress: 24 },
-  { title: "Kindness Challenge", emoji: "🐁", description: "Day 1 of 7 - Spread kindness daily", progress: 5 }
+  { id: "mindful-mornings", title: "Mindful Mornings", emoji: "🎯", description: "Start your day with 10 minutes of mindfulness for 30 days.", progress: 60 },
+  { id: "fitness-streak", title: "Fitness Streak", emoji: "👟", description: "Exercise daily and log your progress for 21 days.", progress: 80 },
+  { id: "healthy-eating", title: "Healthy Eating", emoji: "🍎", description: "Share recipes and tips for a balanced diet for 14 days.", progress: 40 },
+  { id: "30-day-mindfulness", title: "30-Day Mindfulness Journey", emoji: "🌱", description: "Day 7 of 30 - Building mindful habits", progress: 23 },
+  { id: "home-workout", title: "Home Workout Challenge", emoji: "✊🏻", description: "Day 12 of 21 - Keep moving at home", progress: 57 },
+  { id: "gratitude", title: "Daily Gratitude Practice", emoji: "🎐", description: "Day 7 of 14 - Cultivating gratitude and positivity", progress: 50 },
+  { id: "hydration", title: "Hydration Challenge", emoji: "🐳", description: "Day 3 of 10 - Drink more water!", progress: 30 },
+  { id: "digital-detox", title: "Digital Detox Challenge", emoji: "👀", description: "Day 2 of 7 - Less screen time, more me time", progress: 15 },
+  { id: "morning-routine", title: "Morning Routine Challenge", emoji: "🌬️", description: "Day 5 of 21 - Start your day right", progress: 24 },
+  { id: "kindness", title: "Kindness Challenge", emoji: "🐁", description: "Day 1 of 7 - Spread kindness daily", progress: 5 }
 ];
 
-const Challenges: React.FC = () => (
+const Challenges: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleJoinChallenge = (id: string, title: string) => {
+    alert(`You have joined the "${title}" challenge! 🎉`);
+    navigate(`/challenges/${id}`);
+
+};
+return (
+  
   <>
     <div className="floating-shapes global-shapes">
       <div className="floating-shape" />
@@ -103,7 +117,9 @@ const Challenges: React.FC = () => (
                 <div className="progress-bar"><div className="progress-fill" style={{ width: `${ch.progress}%` }}></div></div>
                 <span className="progress-text">{ch.progress}% Complete</span>
               </div>
-              <button className="btn-primary">Join Challenge</button>
+                              <button className="btn-primary" onClick={() => handleJoinChallenge(ch.id, ch.title)}>
+                  Join Challenge
+                </button>
             </div>
           ))}
         </div>
@@ -111,5 +127,6 @@ const Challenges: React.FC = () => (
     </main>
   </>
 );
+};
 
 export default Challenges; 
