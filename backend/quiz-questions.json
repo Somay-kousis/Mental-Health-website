@@ -1,0 +1,158 @@
+[
+  {
+    "id": 1,
+    "question": "Over the last few days, how have you been feeling physically?",
+    "options": [
+      {
+        "text": "Full of energy and well-rested.",
+        "value": 5
+      },
+      {
+        "text": "Generally good, with normal ups and downs.",
+        "value": 4
+      },
+      {
+        "text": "A little tired or run down.",
+        "value": 3
+      },
+      {
+        "text": "Consistently fatigued or unwell.",
+        "value": 2
+      },
+      {
+        "text": "Exhausted and physically drained.",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "question": "How connected have you felt to others recently?",
+    "options": [
+      {
+        "text": "Very connected and supported.",
+        "value": 5
+      },
+      {
+        "text": "Fairly connected, I've had some good interactions.",
+        "value": 4
+      },
+      {
+        "text": "A bit distant or isolated.",
+        "value": 3
+      },
+      {
+        "text": "Mostly lonely and disconnected.",
+        "value": 2
+      },
+      {
+        "text": "Completely isolated from everyone.",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "question": "How have you been handling daily tasks and responsibilities?",
+    "options": [
+      {
+        "text": "On top of everything and feeling productive.",
+        "value": 5
+      },
+      {
+        "text": "Managing well, getting things done.",
+        "value": 4
+      },
+      {
+        "text": "Struggling to stay motivated or focused.",
+        "value": 3
+      },
+      {
+        "text": "Falling behind and feeling overwhelmed.",
+        "value": 2
+      },
+      {
+        "text": "Unable to handle my responsibilities at all.",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "question": "How much have you been able to enjoy your usual hobbies?",
+    "options": [
+      {
+        "text": "I've been fully engaged and enjoying them.",
+        "value": 5
+      },
+      {
+        "text": "I've enjoyed them, but maybe not as much as usual.",
+        "value": 4
+      },
+      {
+        "text": "I've had little interest in them.",
+        "value": 3
+      },
+      {
+        "text": "I've had no interest in them at all.",
+        "value": 2
+      },
+      {
+        "text": "The thought of them feels like a chore.",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "question": "How has your sleep quality been lately?",
+    "options": [
+      {
+        "text": "Deep, restful, and refreshing.",
+        "value": 5
+      },
+      {
+        "text": "Mostly good, with a few restless nights.",
+        "value": 4
+      },
+      {
+        "text": "Okay, but I often wake up feeling tired.",
+        "value": 3
+      },
+      {
+        "text": "Poor, I've been struggling to fall or stay asleep.",
+        "value": 2
+      },
+      {
+        "text": "Very poor, my sleep has been consistently disrupted.",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "question": "How hopeful are you feeling about the future?",
+    "options": [
+      {
+        "text": "Very optimistic and excited.",
+        "value": 5
+      },
+      {
+        "text": "Generally hopeful and positive.",
+        "value": 4
+      },
+      {
+        "text": "Uncertain or a bit worried.",
+        "value": 3
+      },
+      {
+        "text": "Mostly pessimistic and anxious.",
+        "value": 2
+      },
+      {
+        "text": "I feel a sense of dread or hopelessness.",
+        "value": 1
+      }
+    ]
+  }
+]

@@ -8,6 +8,7 @@ const mongoose   = require('mongoose');
 const cors       = require('cors');
 const http       = require('http');
 const { Server } = require('socket.io');
+const quizRoutes = require('./routes/quizRoutes');
 
 // --- 2. IMPORT ALL ROUTES FROM BOTH PROJECTS ---
 // Routes from your original chat application
@@ -38,8 +39,7 @@ const io     = new Server(server, {
 // --- 4. MIDDLEWARE ---
 app.use(cors());
 app.use(express.json());
-
-
+app.use('/api/quiz', quizRoutes);
 // --- 5. MOUNT ALL API ROUTES ---
 // Original Routes
 app.use('/api', authRoutes);
